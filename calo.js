@@ -1,5 +1,13 @@
 (function (w) {
     function renderObject(data, scope, prefix, xPath) {
+
+        const els = scope.querySelectorAll("[\\@field]")
+        els.forEach(el => {
+            if (el.dataset.xpath && data[el.dataset.xpath]) {
+                SetValue(el, data[el.dataset.xpath])
+            }
+        })
+
         for (const key in data) {
             if (Object.hasOwnProperty.call(data, key)) {
                 const fieldValue = data[key];
