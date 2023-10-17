@@ -9,6 +9,7 @@
             } else {
                 const dataPath = el.getAttribute("@field")
                 if (dataPath) {
+                    el.dataset.xpath = dataPath
                     SetValue(el, eval("data" + "." + dataPath))
                 }
             }
@@ -156,7 +157,6 @@
                     ip.addEventListener('keyup', function (e) {
                         e.preventDefault()
                         e.stopPropagation()
-                        eval(ip.dataset.xpath + "='" + ip.value + "'")
                         eval("target.settings.model." + ip.dataset.xpath + "='" + ip.value + "'")
                         root.querySelectorAll(`[data-xpath= '${ip.dataset.xpath}']`).forEach(el => {
                             SetValue(el, ip.value)
