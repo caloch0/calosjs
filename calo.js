@@ -4,13 +4,15 @@
 
         const els = scope.querySelectorAll("[\\@field]")
         els.forEach(el => {
-            if (el.dataset.xpath && data[el.dataset.xpath]) {
+            if (el.dataset.xpath && data[el.dataset.xpath] && isValType(data[el.dataset.xpath])) {
                 SetValue(el, data[el.dataset.xpath])
             } else {
                 const dataPath = el.getAttribute("@field")
                 if (dataPath) {
                     el.dataset.xpath = dataPath
-                    SetValue(el, eval("data" + "." + dataPath))
+                    var v = eval("data" + "." + dataPath)
+                    if (isValType(v))
+                        SetValue(el, v)
                 }
             }
         })
