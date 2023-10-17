@@ -5,6 +5,11 @@
         els.forEach(el => {
             if (el.dataset.xpath && data[el.dataset.xpath]) {
                 SetValue(el, data[el.dataset.xpath])
+            } else {
+                const dataPath = el.getAttribute("[\\@field]")
+                if (data[dataPath]) {
+                    SetValue(el.data[dataPath])
+                }
             }
         })
 
@@ -64,6 +69,7 @@
             let refName = r.getAttribute('ref')
             this.refs[refName] = r
         })
+        calo.run.apply(this)
     }
     calo.prototype = {
         getElsByxpath: function (xpath) {
@@ -71,18 +77,18 @@
         }
         , makePlugin: function (idOrEl, functionPlugin) {
             if (idOrEl instanceof HTMLElement)
-                functionPlugin.call(this.settings, idOrEl)
+                functionPlugin.call(this, idOrEl)
             else
                 functionPlugin.call(this.settings, document.getElementById(idOrEl))
-            calo.run.apply(this.settings)
+            calo.run.apply(this)
         }
         , callPlugin: function (el, functionPlugin) {
             let args = [el]
             for (let i = 2; i < arguments.length; i++) {
                 args.push(arguments[i])
             }
-            functionPlugin.apply(this.settings, args)
-            calo.run.apply(this.settings)
+            functionPlugin.apply(this, args)
+            calo.run.apply(this)
         }
     }
 
@@ -94,25 +100,25 @@
     }
 
     calo.run = function () {
-        const settings = this
-        const root = settings.rootel
+        const target = this
+        const root = target.rootel
         removePoppedbyScope(root)
         renderScope({
-            ...settings.global,
-            ...settings.model
+            ...target.settings.global,
+            ...target.settings.model
         }, root, "", "calo.model")
         var clicks = root.querySelectorAll("[\\@Click]")
         var changes = root.querySelectorAll("[\\@Change]")
         clicks.forEach(c => {
             c.onclick = function (e) {
-                settings[c.getAttribute("@Click")].call(settings, c, c.value)
-                calo.run.apply(settings)
+                target.settings[c.getAttribute("@Click")].call(target, c, c.value)
+                calo.run.apply(target)
             }
         })
         changes.forEach(c => {
             c.onchange = function () {
-                settings[c.getAttribute("@Change")].call(settings, c, c.value)
-                calo.run.apply(settings)
+                target.settings[c.getAttribute("@Change")].call(target, c, c.value)
+                calo.run.apply(target)
             }
         })
 

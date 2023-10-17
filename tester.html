@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./calo.utils.js"> </script>
+    <script src="./calo.js"> </script>
+</head>
+
+<body>
+
+    <div id="app1">
+        <input @field="name" />
+        <input @field="sex" />
+        <button @click="ac">click once</button>
+
+    </div>
+    <script>
+
+        var x = new calo(document.getElementById("app1"),
+            { model: {name:"calos",sex:"male"}, global: {country:"China"},ac:function(){
+                this.settings.model.name="changed calos"
+                alert(1)
+            } })
+    </script>
+</body>
+
+</html>
