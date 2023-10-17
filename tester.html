@@ -14,16 +14,21 @@
     <div id="app1">
         <input @field="name" />
         <input @field="sex" />
+        <input @field="email.addr1" />
         <button @click="ac">click once</button>
 
     </div>
     <script>
 
         var x = new calo(document.getElementById("app1"),
-            { model: {name:"calos",sex:"male"}, global: {country:"China"},ac:function(){
-                this.settings.model.name="changed calos"
-                alert(1)
-            } })
+            {
+                model: { name: "calos", sex: "male" ,email:{addr1:"sf@fast.com"}},
+                global: { country: "China" },
+                ac: function () {
+                    this.settings.model.name = "changed calos"
+                    alert(1)
+                }
+            })
     </script>
 </body>
 

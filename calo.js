@@ -6,9 +6,9 @@
             if (el.dataset.xpath && data[el.dataset.xpath]) {
                 SetValue(el, data[el.dataset.xpath])
             } else {
-                const dataPath = el.getAttribute("[\\@field]")
-                if (data[dataPath]) {
-                    SetValue(el.data[dataPath])
+                const dataPath = el.getAttribute("@field")
+                if (dataPath) {
+                    SetValue(el,eval("data"+"."+dataPath))
                 }
             }
         })
