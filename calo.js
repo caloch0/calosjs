@@ -1,5 +1,5 @@
 (function (w) {
-    function renderObject(data, scope, prefix, xPath) {
+    function renderScope(data, scope, prefix, xPath) {
 
         const els = scope.querySelectorAll("[\\@field]")
         els.forEach(el => {
@@ -21,7 +21,7 @@
                     const els = getElsByFieldName(scope, key)
                     els.forEach(el => {
                         el.dataset.xpath = xPath + "." + key
-                        renderObject(fieldValue, el, "", el.dataset.xpath)
+                        renderScope(fieldValue, el, "", el.dataset.xpath)
                     })
                 } else if (isArrayType(fieldValue)) {
                     const els = scope.querySelectorAll("[\\@field^=" + key + "\\|]")
@@ -40,7 +40,7 @@
                             if (isValType(val))
                                 SetValue(clone, val)
                             else
-                                renderObject(val, clone, subAlias + ".", clone.dataset.xpath)
+                                renderScope(val, clone, subAlias + ".", clone.dataset.xpath)
                             ci++
                             el.style.display = 'none'
 
@@ -97,7 +97,7 @@
         const settings = this
         const root = settings.rootel
         removePoppedbyScope(root)
-        renderObject({
+        renderScope({
             ...settings.global,
             ...settings.model
         }, root, "", "calo.model")
