@@ -106,7 +106,7 @@
         renderScope({
             ...target.settings.global,
             ...target.settings.model
-        }, root, "", "calo.model")
+        }, root, "", "target.settings.model")
         var clicks = root.querySelectorAll("[\\@Click]")
         var changes = root.querySelectorAll("[\\@Change]")
         clicks.forEach(c => {

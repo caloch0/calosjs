@@ -12,9 +12,11 @@
 <body>
 
     <div id="app1">
-        <input @field="name" />
-        <input @field="sex" />
-        <input @field="email.addr1" />
+        <input @field="name" type="text" />
+        <input @field="sex" type="text" />
+        <input @field="sex" type="text" />
+
+        <input @field="email.addr1" type="text" />
         <button @click="ac">click once</button>
 
     </div>
@@ -22,7 +24,7 @@
 
         var x = new calo(document.getElementById("app1"),
             {
-                model: { name: "calos", sex: "male" ,email:{addr1:"sf@fast.com"}},
+                model: { name: "calos", sex: "male", email: { addr1: "sf@fast.com" } },
                 global: { country: "China" },
                 ac: function () {
                     this.settings.model.name = "changed calos"
