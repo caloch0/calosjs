@@ -1,5 +1,6 @@
 (function (w) {
     function renderScope(data, scope, prefix, xPath) {
+        if (xPath) xPath = xPath + "."
 
         const els = scope.querySelectorAll("[\\@field]")
         els.forEach(el => {
@@ -8,7 +9,7 @@
             } else {
                 const dataPath = el.getAttribute("@field")
                 if (dataPath) {
-                    SetValue(el,eval("data"+"."+dataPath))
+                    SetValue(el, eval("data" + "." + dataPath))
                 }
             }
         })
@@ -20,12 +21,12 @@
                     const els = getElsByFieldName(scope, prefix + key)
                     els.forEach(el => {
                         SetValue(el, data[key])
-                        el.dataset.xpath = xPath + "." + key
+                        el.dataset.xpath = xPath + key
                     });
                 } else if (isObjectType(fieldValue)) {
                     const els = getElsByFieldName(scope, key)
                     els.forEach(el => {
-                        el.dataset.xpath = xPath + "." + key
+                        el.dataset.xpath = xPath + key
                         renderScope(fieldValue, el, "", el.dataset.xpath)
                     })
                 } else if (isArrayType(fieldValue)) {
@@ -38,7 +39,7 @@
                             clone = el.cloneNode(true)
                             clone.style.display = ''
                             clone.setAttribute("poped", "true")
-                            clone.dataset.xpath = xPath + "." + key + `[${ci}]`
+                            clone.dataset.xpath = xPath + key + `[${ci}]`
                             clone.dataset.index = ci
                             insertAfter(clone, lastCursor)
                             lastCursor = clone
@@ -106,7 +107,7 @@
         renderScope({
             ...target.settings.global,
             ...target.settings.model
-        }, root, "", "target.settings.model")
+        }, root, "", "")
         var clicks = root.querySelectorAll("[\\@Click]")
         var changes = root.querySelectorAll("[\\@Change]")
         clicks.forEach(c => {
@@ -156,6 +157,7 @@
                         e.preventDefault()
                         e.stopPropagation()
                         eval(ip.dataset.xpath + "='" + ip.value + "'")
+                        eval("target.settings.model." + ip.dataset.xpath + "='" + ip.value + "'")
                         root.querySelectorAll(`[data-xpath= '${ip.dataset.xpath}']`).forEach(el => {
                             SetValue(el, ip.value)
                         })
