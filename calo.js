@@ -56,8 +56,8 @@
                 SetValue(el, data[el.dataset.xpath])
             } else {
                 const dataPath = el.getAttribute("@field")
-                if (dataPath) {
-                    // el.dataset.xpath = dataPath
+                if (dataPath&&!el.dataset.xpath) {
+                    el.dataset.xpath = dataPath
                     try {
                         var v = eval("data" + "." + dataPath)
                         if (isValType(v))
