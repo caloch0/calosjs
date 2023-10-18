@@ -56,7 +56,7 @@
                 SetValue(el, data[el.dataset.xpath])
             } else {
                 const dataPath = el.getAttribute("@field")
-                if (dataPath&&!el.dataset.xpath) {
+                if (dataPath && !el.dataset.xpath) {
                     el.dataset.xpath = dataPath
                     try {
                         var v = eval("data" + "." + dataPath)
@@ -151,11 +151,14 @@
             if (el.name) {
                 const groupname = el.name
                 const group = root.querySelectorAll(`input[type=radio][name=${groupname}]`)
-                group.forEach(el1 => {
+                for (let i = 0; i < group.length; i++) {
+                    if (i == 0) continue;
+                    const el1 = group[i];
                     if (!el1.isEqualNode(el)) {
                         eval("target.settings.model." + el1.dataset.xpath + "=false")
                     }
-                })
+
+                }
             }
 
         })
