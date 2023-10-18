@@ -24,12 +24,16 @@
         <input @field="email.addr1" type="text" />
         <button @click="ac">click once</button>
 
+        <select @field="hobby">
+            <option @field="hobbies|"></option>
+        </select>
+
     </div>
     <script>
 
         var x = new calo(document.getElementById("app1"),
             {
-                model: { name: "calos", sex: "male", email: { addr1: "sf@fast.com" } },
+                model: { name: "calos", sex: "male", hobby: "selectHobby", hobbies: ["selectHobby", "play", "create", "travel"], email: { addr1: "sf@fast.com" } },
                 global: { country: "China" },
                 ac: function () {
                     this.settings.model.name = "changed calos"

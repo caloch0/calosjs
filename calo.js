@@ -10,9 +10,11 @@
                 const dataPath = el.getAttribute("@field")
                 if (dataPath) {
                     el.dataset.xpath = dataPath
-                    var v = eval("data" + "." + dataPath)
-                    if (isValType(v))
-                        SetValue(el, v)
+                    try {
+                        var v = eval("data" + "." + dataPath)
+                        if (isValType(v))
+                            SetValue(el, v)
+                    } catch { }
                 }
             }
         })
@@ -193,7 +195,7 @@
             root.querySelectorAll("Select").forEach(ipc => {
                 ipc.onchange = function () {
                     const selected = this.value
-                    var xpath = this.dataset.xpath
+                    var xpath = ipc.dataset.xpath
                     eval("target.settings.model." + xpath + "='" + selected + "'")
                     const nodes = root.querySelectorAll(`[data-xpath= '${xpath}']`);
                     nodes.forEach(el => {
