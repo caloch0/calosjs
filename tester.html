@@ -23,17 +23,33 @@
         <input @field="email.addr1" type="text" />
         <input @field="email.addr1" type="text" />
         <button @click="ac">click once</button>
-
+        <br>my Hobby:
         <select @field="hobby">
             <option @field="hobbies|"></option>
         </select>
+        <br>
+        你快乐吗？
+        <input type="checkbox" @field="isHappy" />快乐
+
+        <br>
+        我快乐吗？
+        <input type="checkbox" @field="isHappy" />快乐
+        <br>
+        我的家乡：
+        <div @field="provinces|p">
+            <input type="radio" @field="p.checked" name="provinces"><span @field="p.name"></span>
+        </div>
 
     </div>
     <script>
 
         var x = new calo(document.getElementById("app1"),
             {
-                model: { name: "calos", sex: "male", hobby: "selectHobby", hobbies: ["selectHobby", "play", "create", "travel"], email: { addr1: "sf@fast.com" } },
+                model: {
+                    name: "calos", sex: "male", hobby: "play", home: "洛阳", provinces: [
+                        { name: "洛阳", checked: false }, { name: "上海", checked: true }],
+                    isHappy: true, hobbies: ["selectHobby", "play", "create", "travel"], email: { addr1: "sf@fast.com" }
+                },
                 global: { country: "China" },
                 ac: function () {
                     this.settings.model.name = "changed calos"
