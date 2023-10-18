@@ -1,5 +1,5 @@
 (function (w) {
-    function renderScope(data, scope, prefix, xPath, cS) {
+    function renderScope(data, scope, prefix, xPath) {
         if (xPath) xPath = xPath + "."
 
         for (const name in data) {
@@ -12,8 +12,8 @@
                 if (isValType(fieldValue)) {
                     const els = getElsByFieldName(scope, selector)
                     els.forEach(el => {
-                        el.dataset.xpath = fullPath
                         SetValue(el, fieldValue)
+                        el.dataset.xpath = fullPath
                     });
                 } else if (isObjectType(fieldValue)) {
                     const els = getElsByFieldName(scope, selector)
@@ -31,7 +31,7 @@
                             clone = el.cloneNode(true)
                             clone.style.display = ''
                             clone.setAttribute("poped", "true")
-                            fullPath = fullPath + `[${ci}]`
+                            fullPath = xPath + name + `[${ci}]`
                             clone.dataset.xpath = fullPath
                             clone.dataset.index = ci
                             insertAfter(clone, lastCursor)
@@ -72,11 +72,8 @@
             global: {},
             model: {}
         }
-        this.controlStorage = []
         this.settings = setting || this.default
         this.rootel = el
-        this.controlStorage.push(el)
-
         this.refs = {}
         let refs = el.querySelectorAll('[ref]')
         refs.forEach(r => {
@@ -120,7 +117,7 @@
         renderScope({
             ...target.settings.global,
             ...target.settings.model
-        }, root, "", "", target.controlStorage)
+        }, root, "", "")
         var clicks = root.querySelectorAll("[\\@Click]")
         var changes = root.querySelectorAll("[\\@Change]")
         clicks.forEach(c => {
