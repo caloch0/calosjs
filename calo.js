@@ -2,23 +2,28 @@
     function renderScope(data, scope, prefix, xPath) {
         if (xPath) xPath = xPath + "."
 
-        for (const key in data) {
-            if (Object.hasOwnProperty.call(data, key)) {
-                const fieldValue = data[key];
+        for (const name in data) {
+            if (Object.hasOwnProperty.call(data, name)) {
+                const fieldValue = data[name];
+                var selector = prefix + name
+
+
                 if (isValType(fieldValue)) {
-                    const els = getElsByFieldName(scope, prefix + key)
+                    const els = getElsByFieldName(scope, selector)
                     els.forEach(el => {
-                        SetValue(el, data[key])
-                        el.dataset.xpath = xPath + key
+                        SetValue(el, fieldValue)
+                        var fullPath = xPath + name
+                        el.dataset.xpath = fullPath
                     });
                 } else if (isObjectType(fieldValue)) {
-                    const els = getElsByFieldName(scope, key)
+                    const els = getElsByFieldName(scope, selector)
                     els.forEach(el => {
-                        el.dataset.xpath = xPath + key
-                        renderScope(fieldValue, el, "", el.dataset.xpath)
+                        var fullPath = xPath + name
+                        el.dataset.xpath = fullPath
+                        renderScope(fieldValue, el, "", fullPath)
                     })
                 } else if (isArrayType(fieldValue)) {
-                    const els = scope.querySelectorAll("[\\@field^=" + key + "\\|]")
+                    const els = scope.querySelectorAll("[\\@field^=" + selector + "\\|]")
                     els.forEach(el => {
                         const subAlias = el.getAttribute("@field").split('|')[1]
                         let ci = 0
@@ -27,14 +32,15 @@
                             clone = el.cloneNode(true)
                             clone.style.display = ''
                             clone.setAttribute("poped", "true")
-                            clone.dataset.xpath = xPath + key + `[${ci}]`
+                            var fullPath = xPath + name + `[${ci}]`
+                            clone.dataset.xpath = fullPath
                             clone.dataset.index = ci
                             insertAfter(clone, lastCursor)
                             lastCursor = clone
                             if (isValType(val))
                                 SetValue(clone, val)
                             else
-                                renderScope(val, clone, subAlias + ".", clone.dataset.xpath)
+                                renderScope(val, clone, subAlias + ".", fullPath)
                             ci++
                             el.style.display = 'none'
 
@@ -51,7 +57,7 @@
             } else {
                 const dataPath = el.getAttribute("@field")
                 if (dataPath) {
-                    el.dataset.xpath = dataPath
+                    // el.dataset.xpath = dataPath
                     try {
                         var v = eval("data" + "." + dataPath)
                         if (isValType(v))
@@ -147,7 +153,7 @@
                 const group = root.querySelectorAll(`input[type=radio][name=${groupname}]`)
                 group.forEach(el1 => {
                     if (!el1.isEqualNode(el)) {
-                        eval("target.settings.model." + ip.dataset.xpath + "=false")
+                        eval("target.settings.model." + el1.dataset.xpath + "=false")
                     }
                 })
             }
@@ -222,7 +228,6 @@
             const dataName = el.getAttribute("@field")
             el.dataset[dataName] = val
         } else if (["LABEL", "SPAN", "OPTION", "H2", "H1", "H3", "P", "DIV", "LI"].indexOf(el.tagName) !== -1) {
-            console.log(el.tagName);
             el.innerHTML = val
         } else if (el.tagName === 'SELECT') {
             el.value = val
