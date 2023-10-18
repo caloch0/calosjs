@@ -137,6 +137,7 @@
         applySameFieldKeyupChange("input[type=date]")
         applySameFieldKeyupChange("input[type=password]")
         applySameFieldKeyupChange("input[type=number]")
+
         applySameFieldClickChange("input[type=checkbox]")
         applySameFieldClickChange("input[type=radio]", function (el) {
             if (el.name) {
@@ -144,8 +145,7 @@
                 const group = root.querySelectorAll(`input[type=radio][name=${groupname}]`)
                 group.forEach(el1 => {
                     if (!el1.isEqualNode(el)) {
-                        const sen = el1.dataset.xpath + "=false"
-                        eval(sen);
+                        eval("target.settings.model." + ip.dataset.xpath + "=false")
                     }
                 })
             }
@@ -179,7 +179,7 @@
                     if (pre) pre(this)
                     var val = this.checked
                     var xpath = this.dataset.xpath
-                    eval(xpath + "=" + val + "")
+                    eval("target.settings.model." + xpath + "='" + val + "'")
                     const nodes = root.querySelectorAll(`[data-xpath= '${xpath}']`);
                     nodes.forEach(el => {
                         SetValue(el, val)
@@ -194,7 +194,7 @@
                 ipc.onchange = function () {
                     const selected = this.value
                     var xpath = this.dataset.xpath
-                    eval(xpath + "='" + selected + "'")
+                    eval("target.settings.model." + xpath + "='" + selected + "'")
                     const nodes = root.querySelectorAll(`[data-xpath= '${xpath}']`);
                     nodes.forEach(el => {
                         SetValue(el, selected)
