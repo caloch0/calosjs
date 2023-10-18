@@ -2,23 +2,6 @@
     function renderScope(data, scope, prefix, xPath) {
         if (xPath) xPath = xPath + "."
 
-        const els = scope.querySelectorAll("[\\@field]")
-        els.forEach(el => {
-            if (el.dataset.xpath && data[el.dataset.xpath] && isValType(data[el.dataset.xpath])) {
-                SetValue(el, data[el.dataset.xpath])
-            } else {
-                const dataPath = el.getAttribute("@field")
-                if (dataPath) {
-                    el.dataset.xpath = dataPath
-                    try {
-                        var v = eval("data" + "." + dataPath)
-                        if (isValType(v))
-                            SetValue(el, v)
-                    } catch { }
-                }
-            }
-        })
-
         for (const key in data) {
             if (Object.hasOwnProperty.call(data, key)) {
                 const fieldValue = data[key];
@@ -60,6 +43,23 @@
                 }
             }
         }
+
+        const els = scope.querySelectorAll("[\\@field]")
+        els.forEach(el => {
+            if (el.dataset.xpath && data[el.dataset.xpath] && isValType(data[el.dataset.xpath])) {
+                SetValue(el, data[el.dataset.xpath])
+            } else {
+                const dataPath = el.getAttribute("@field")
+                if (dataPath) {
+                    el.dataset.xpath = dataPath
+                    try {
+                        var v = eval("data" + "." + dataPath)
+                        if (isValType(v))
+                            SetValue(el, v)
+                    } catch { }
+                }
+            }
+        })
     }
 
     var calo = function (el, setting) {
