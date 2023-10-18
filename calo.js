@@ -1,24 +1,23 @@
 (function (w) {
-    function renderScope(data, scope, prefix, xPath) {
+    function renderScope(data, scope, prefix, xPath, cS) {
         if (xPath) xPath = xPath + "."
 
         for (const name in data) {
             if (Object.hasOwnProperty.call(data, name)) {
                 const fieldValue = data[name];
                 var selector = prefix + name
+                var fullPath = xPath + name
 
 
                 if (isValType(fieldValue)) {
                     const els = getElsByFieldName(scope, selector)
                     els.forEach(el => {
-                        SetValue(el, fieldValue)
-                        var fullPath = xPath + name
                         el.dataset.xpath = fullPath
+                        SetValue(el, fieldValue)
                     });
                 } else if (isObjectType(fieldValue)) {
                     const els = getElsByFieldName(scope, selector)
                     els.forEach(el => {
-                        var fullPath = xPath + name
                         el.dataset.xpath = fullPath
                         renderScope(fieldValue, el, "", fullPath)
                     })
@@ -32,7 +31,7 @@
                             clone = el.cloneNode(true)
                             clone.style.display = ''
                             clone.setAttribute("poped", "true")
-                            var fullPath = xPath + name + `[${ci}]`
+                            fullPath = fullPath + `[${ci}]`
                             clone.dataset.xpath = fullPath
                             clone.dataset.index = ci
                             insertAfter(clone, lastCursor)
@@ -73,8 +72,11 @@
             global: {},
             model: {}
         }
+        this.controlStorage = []
         this.settings = setting || this.default
         this.rootel = el
+        this.controlStorage.push(el)
+
         this.refs = {}
         let refs = el.querySelectorAll('[ref]')
         refs.forEach(r => {
@@ -118,7 +120,7 @@
         renderScope({
             ...target.settings.global,
             ...target.settings.model
-        }, root, "", "")
+        }, root, "", "", target.controlStorage)
         var clicks = root.querySelectorAll("[\\@Click]")
         var changes = root.querySelectorAll("[\\@Change]")
         clicks.forEach(c => {
