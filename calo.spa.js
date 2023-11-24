@@ -28,7 +28,7 @@ function routerExtend(o, routes) {
         var script = scriptBlock ? scriptBlock.text : ''
         root.appendChild(hm)
         if (script) {
-            var Page = eval(script)
+            eval(script)
             var page = new Page()
             Calo.run.apply(page, o.query)
         }
