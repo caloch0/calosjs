@@ -1,13 +1,8 @@
 function routerExtend(o, routes) {
     o.spaPath = o.spaPath || "./"
     const root = o.rootel.querySelector("[\\@Router]") || o.rootel;
-    o.routes = routes;
-    o.templateStorage = {} || o.templateStorage
-    var stringToHTML = function (str) {
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(str, 'text/html');
-        return doc.body;
-    };
+    router(routes)
+
     o.navigate = function (route, isHistory) {
         if (!window.templateLoaded && route !== "/") {
             console.log("only route template is loaded, rquesting others cannot succeed")
@@ -28,29 +23,37 @@ function routerExtend(o, routes) {
             o.query = {}
         }
         root.innerHTML = ''
-        var hm = stringToHTML(decodeURI(o.templateStorage[route.toLowerCase()]))
+        var hm = stringToHTML(decodeURIComponent(o.templateStorage[route.toLowerCase()]))
         var scriptBlock = hm.getElementsByTagName('script')[0]
         var script = scriptBlock ? scriptBlock.text : ''
         root.appendChild(hm)
-        if (script)
-            eval(script)
+        if (script) {
+            var Page = eval(script)
+            var page = new Page()
+            Calo.run.apply(page, o.query)
+        }
+        var links = root.querySelectorAll("[\\@Link]")
 
+        links.forEach(l => {
+            l.onclick = function (e) {
+                e.preventDefault();
+                if (o.navigate) {
+                    var dest = l.getAttribute("@Link")
+                    o.navigate(dest)
+                }
+            }
+        })
 
     }
 
-    var links = root.querySelectorAll("[\\@Link]")
+    function stringToHTML(str) {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(str, 'text/html');
+        return doc.body;
+    };
 
-    links.forEach(l => {
-        l.onclick = function (e) {
-            e.preventDefault();
-            if (o.navigate) {
-                var dest = l.getAttribute("@Link")
-                o.navigate(dest)
-            }
-        }
-    })
 
-    o.router = function (routes) {
+    function router(routes) {
         var router = o.routes || {}
         router = {
             ...router,
@@ -64,7 +67,7 @@ function routerExtend(o, routes) {
                 var p = new Promise(resolve => {
                     const htmlName = router[key];
                     getHtmlOrJson(o.spaPath + htmlName + "?_=" + Math.random(), function (text) {
-                        templateStorage[keyLower] = encodeURI(text);
+                        templateStorage[keyLower] = encodeURIComponent(text);
                         resolve()
                     })
 
