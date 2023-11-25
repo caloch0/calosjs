@@ -108,23 +108,7 @@
             });
     }
 
-    function makeCalo(o, doLoadRouter) {
-        window.calo = {
-            ...window.calo,
-            ...o
-        }
-        if (doLoadRouter || o.routes) {
-            calo.router(calo.routes || {}, function () {
-                if (location.href.indexOf('#') != -1) {
-                    const curRoute = location.href.split('#')[1]
-                    calo.navigate(curRoute)
-                }
-            })
-        }
-        calo.run.apply(calo)
-        return window.calo
-    }
-    
+
     const utils = {
         loadScript,
         loadScripts,
@@ -134,7 +118,6 @@
         whenready,
         require,
         requireAll,
-        makeCalo,
     }
     for (const i in utils) {
         w[i] = utils[i]
