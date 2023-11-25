@@ -139,6 +139,18 @@
             el.style.display = flag === true ? '' : 'none'
         })
 
+        var links = root.querySelectorAll("[\\@Link]")
+
+        links.forEach(l => {
+            l.onclick = function (e) {
+                e.preventDefault();
+                if (o.navigate) {
+                    var dest = l.getAttribute("@Link")
+                    o.navigate(dest)
+                }
+            }
+        })
+
         applySameFieldKeyupChange("input[type=text]")
         applySameFieldKeyupChange("textarea")
         applySameFieldKeyupChange("input[type=date]")

@@ -34,17 +34,7 @@ function routerExtend(o, routes) {
             var page = new Page(o.query)
             navPage = new calo(o.rootel, page.settings)
         }
-        var links = root.querySelectorAll("[\\@Link]")
-
-        links.forEach(l => {
-            l.onclick = function (e) {
-                e.preventDefault();
-                if (o.navigate) {
-                    var dest = l.getAttribute("@Link")
-                    o.navigate(dest)
-                }
-            }
-        })
+        
         return navPage
     }
 
