@@ -4,6 +4,7 @@ function routerExtend(o, routes) {
     router(routes)
 
     o.navigate = function (route, isHistory) {
+        var navPage
         if (!window.templateLoaded && route !== "/") {
             console.log("only route template is loaded, rquesting others cannot succeed")
             return
@@ -31,7 +32,7 @@ function routerExtend(o, routes) {
             eval(script)
             if (!Page) { { console.log('Page should have function Page') }; return; }
             var page = new Page(o.query)
-            new calo(root,page.settings)
+            navPage = new calo(root, page.settings)
         }
         var links = root.querySelectorAll("[\\@Link]")
 
@@ -44,7 +45,7 @@ function routerExtend(o, routes) {
                 }
             }
         })
-
+        return navPage
     }
 
     function stringToHTML(str) {
