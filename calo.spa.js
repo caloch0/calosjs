@@ -31,7 +31,7 @@ function routerExtend(o, routes) {
         if (script) {
             eval(script)
             if (!Page) { { console.log('Page should have function Page') }; return; }
-            var page = new Page(o.query)
+            var page = new Page(o.query,o)
             navPage = new calo(o.rootel, page.settings)
         }
         
