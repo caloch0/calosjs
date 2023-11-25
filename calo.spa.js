@@ -31,7 +31,7 @@ function routerExtend(o, routes) {
             eval(script)
             if (!Page) { { console.log('Page should have function Page') }; return; }
             var page = new Page(o.query)
-            new calo(o.rootel,page.settings)
+            new calo(root,page.settings)
         }
         var links = root.querySelectorAll("[\\@Link]")
 
