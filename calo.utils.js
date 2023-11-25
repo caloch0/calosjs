@@ -3,7 +3,7 @@
     function loadScript(path) {
         var node = document.createElement('script')
         node.type = 'text/javascript'
-        node.src = path + '?_=' + (new Date().getMilliseconds())
+        node.src = path + '?_=' + (new Date().getTime())
         document.body.appendChild(node)
     }
 
@@ -25,7 +25,7 @@
         }
 
         var request = makeHttpObject();
-        request.open("GET", url + "?" + new Date().getMilliseconds(), true);
+        request.open("GET", url + "?" + new Date().getTime(), true);
         request.send(null);
         request.onreadystatechange = function () {
             if (request.readyState == 4) {
