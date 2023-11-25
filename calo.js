@@ -144,9 +144,9 @@
         links.forEach(l => {
             l.onclick = function (e) {
                 e.preventDefault();
-                if (o.navigate) {
+                if (target.navigate) {
                     var dest = l.getAttribute("@Link")
-                    o.navigate(dest)
+                    target.navigate(dest)
                 }
             }
         })
