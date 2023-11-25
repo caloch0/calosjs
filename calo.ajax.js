@@ -1,7 +1,7 @@
-(function (calo) {
-    calo.ajax = ajax
-    calo.ajaxJson = ajaxJson
-    calo.ajaxQueue = ajaxQueue
+function ajaxExtend(o) {
+    o.ajax = ajax
+    o.ajaxJson = ajaxJson
+    o.ajaxQueue = ajaxQueue
 
     function ajaxQueue(req) {
         if (!ajaxQueue.queue)
@@ -70,8 +70,8 @@
         }
         xhr.onload = function () {
             if (xhr.status === 200) {
-                success.call(calo, JSON.parse(xhr.responseText))
-                calo.run.apply(calo);
+                success.call(o, JSON.parse(xhr.responseText))
+                calo.run.apply(o);
             } else {
                 error && error(xhr.status);
             }
@@ -107,11 +107,13 @@
         }
         xhr.onload = function () {
             if (xhr.status === 200) {
-                success.call(calo, JSON.parse(xhr.responseText))
-                calo.run.apply(calo);
+                success.call(o, JSON.parse(xhr.responseText))
+                calo.run.apply(o);
             } else {
                 error && error(xhr.status);
             }
         }
     }
-})(window.calo);
+    return o
+
+}
