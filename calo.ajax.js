@@ -32,6 +32,7 @@
                     },
                     error: function () {
                         error()
+                        ajaxQueue.locked = false
                         ajaxQueue()
                     }
                 })
