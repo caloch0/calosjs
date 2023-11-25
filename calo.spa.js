@@ -3,7 +3,6 @@ function routerExtend(o, routes) {
     const root = o.rootel.querySelector("[\\@Router]") || o.rootel;
 
     o.navigate = function (route, isHistory) {
-
         var navPage
         if (!window.templateLoaded && route !== "/") {
             console.log("only route template is loaded, rquesting others cannot succeed")
