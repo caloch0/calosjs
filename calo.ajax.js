@@ -8,29 +8,34 @@
             ajaxQueue.queue = []
         if (req)
             ajaxQueue.queue.push(req)
+        if (ajaxQueue.locked) return
         if (ajaxQueue.queue.length > 0) {
-            const {
-                url,
-                data,
-                type,
-                success,
-                error
-            } = ajaxQueue.queue[0]
-            ajax({
-                url: url,
-                data: data,
-                type: type,
-                success: function (resp) {
-                    success(resp)
-                    ajaxQueue.queue.shift()
-                    ajaxQueue()
+            if (!ajaxQueue.locked) {
+                const {
+                    url,
+                    data,
+                    type,
+                    success,
+                    error
+                } = ajaxQueue.queue[0]
+                ajaxQueue.locked = true
+                ajax({
+                    url: url,
+                    data: data,
+                    type: type,
+                    success: function (resp) {
+                        success(resp)
+                        ajaxQueue.queue.shift()
+                        ajaxQueue.locked = false
+                        ajaxQueue()
 
-                },
-                error: function () {
-                    error()
-                    ajaxQueue()
-                }
-            })
+                    },
+                    error: function () {
+                        error()
+                        ajaxQueue()
+                    }
+                })
+            }
         }
     }
 
