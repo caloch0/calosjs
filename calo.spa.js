@@ -31,7 +31,14 @@ function routerExtend(o, routes) {
             eval(script)
             if (!Page) { { console.log('Page should have function Page') }; return; }
             var page = new Page()
-            Calo.run.call(page, o.query)
+            page.rootel = root
+            page.refs = {}
+            let refs = page.rootel.querySelectorAll('[ref]')
+            refs.forEach(r => {
+                let refName = r.getAttribute('ref')
+                page.refs[refName] = r
+            })
+            calo.run.call(page, o.query)
         }
         var links = root.querySelectorAll("[\\@Link]")
 
