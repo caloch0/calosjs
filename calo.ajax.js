@@ -8,7 +8,7 @@
             ajaxQueue.queue = []
         if (req)
             ajaxQueue.queue.push(req)
-        if (ajaxQueue.locked) return
+        if (ajaxQueue.locked) return //if the queue is locked, only push new request to the queue, return ahead of time
         if (ajaxQueue.queue.length > 0) {
             if (!ajaxQueue.locked) {
                 const {
