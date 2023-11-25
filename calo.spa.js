@@ -50,10 +50,6 @@ function routerExtend(o, routes) {
     };
 
     function router(routes) {
-        if (location.href.indexOf('#') !== -1) {
-            var path = location.href.split('#')[1]
-            o.navigate(path)
-        }
         var router = o.routes || {}
         router = {
             ...router,
@@ -78,6 +74,10 @@ function routerExtend(o, routes) {
         Promise.all(proms).then(function () {
             window.templateLoaded = true
             console.log('all templates have been loaded')
+            if (location.href.indexOf('#') !== -1) {
+                var path = location.href.split('#')[1]
+                o.navigate(path)
+            }
         })
     }
     return o;
