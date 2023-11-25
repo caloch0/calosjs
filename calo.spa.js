@@ -29,8 +29,9 @@ function routerExtend(o, routes) {
         root.appendChild(hm)
         if (script) {
             eval(script)
+            if (!Page) { { console.log('Page should have function Page') }; return; }
             var page = new Page()
-            Calo.run.apply(page, o.query)
+            Calo.run.call(page, o.query)
         }
         var links = root.querySelectorAll("[\\@Link]")
 
