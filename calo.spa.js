@@ -31,10 +31,12 @@ function routerExtend(o, routes) {
         if (script) {
             eval(script)
             if (!Page) { { console.log('Page should have function Page') }; return; }
-            var page = new Page(o.query,o)
+            var page = new Page(o.query, o)
+            page.settings.global = { ...o.settings.global, ...page.settings.global }
+
             navPage = new calo(o.rootel, page.settings)
         }
-        
+
         return navPage
     }
 
