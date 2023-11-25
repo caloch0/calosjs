@@ -1,9 +1,9 @@
 function routerExtend(o, routes) {
     o.spaPath = o.spaPath || "./"
     const root = o.rootel.querySelector("[\\@Router]") || o.rootel;
-    router(routes)
 
     o.navigate = function (route, isHistory) {
+
         var navPage
         if (!window.templateLoaded && route !== "/") {
             console.log("only route template is loaded, rquesting others cannot succeed")
@@ -40,14 +40,20 @@ function routerExtend(o, routes) {
         return navPage
     }
 
+    router(routes)
+
+
     function stringToHTML(str) {
         var parser = new DOMParser();
         var doc = parser.parseFromString(str, 'text/html');
         return doc.body;
     };
 
-
     function router(routes) {
+        if (location.href.indexOf('#') !== -1) {
+            var path = location.href.split('#')[1]
+            o.navigate(path)
+        }
         var router = o.routes || {}
         router = {
             ...router,
