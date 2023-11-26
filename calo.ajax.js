@@ -106,7 +106,7 @@ function ajaxExtend(o) {
             xhr.send(str);
         }
         xhr.onload = function () {
-            if (calo.current === o) {
+            if (o.parent.current === o) {
                 if (xhr.status === 200) {
                     success.call(o, JSON.parse(xhr.responseText))
                     calo.run.apply(o);
