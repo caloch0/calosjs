@@ -106,13 +106,11 @@ function ajaxExtend(o) {
             xhr.send(str);
         }
         xhr.onload = function () {
-            if (!o.parent || o.parent.current === o) {
-                if (xhr.status === 200) {
-                    success.call(o, JSON.parse(xhr.responseText))
-                    calo.run.apply(o);
-                } else {
-                    error && error(xhr.status);
-                }
+            if (xhr.status === 200) {
+                success.call(o.current, JSON.parse(xhr.responseText))
+                calo.run.apply(o.current);
+            } else {
+                error && error(xhr.status);
             }
         }
     }
