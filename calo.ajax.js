@@ -70,8 +70,8 @@ function ajaxExtend(o) {
         }
         xhr.onload = function () {
             if (xhr.status === 200) {
-                success.call(o, JSON.parse(xhr.responseText))
-                calo.run.apply(o);
+                success.call(o.current, JSON.parse(xhr.responseText))
+                calo.run.apply(o.current);
             } else {
                 error && error(xhr.status);
             }
