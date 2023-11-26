@@ -111,7 +111,7 @@
     }
 
     calo.run = function () {
-        calo.current=this
+        this.current=this
         const target = this
         const root = target.rootel
         removePoppedbyScope(root)
