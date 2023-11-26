@@ -41,13 +41,18 @@ function ajaxExtend(o) {
     }
 
 
-    function ajaxJson({
-        url,
-        data,
-        type,
-        success,
-        error
-    }, beforeSend) {
+    function ajaxJson(req, beforeSend) {
+
+        const {
+            url,
+            data,
+            type,
+            success,
+            error
+        } = req
+
+        o.currentReqs = o.currentReqs || []
+        o.currentReqs.push(req)
         type = type || "get";
         data = data || {};
         let str = "";
@@ -70,8 +75,10 @@ function ajaxExtend(o) {
         }
         xhr.onload = function () {
             if (xhr.status === 200) {
-                success.call(o.current, JSON.parse(xhr.responseText))
-                calo.run.apply(o.current);
+                if (o.currentReqs.indexOf(req) !== -1) {
+                    success.call(o.current, JSON.parse(xhr.responseText))
+                    calo.run.apply(o.current);
+                }
             } else {
                 error && error(xhr.status);
             }
