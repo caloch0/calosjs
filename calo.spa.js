@@ -36,6 +36,7 @@ function routerExtend(o, routes) {
             navPage = new calo(o.rootel, page.settings)
             navPage.parent = o
             o.current = navPage
+            o.currentReqs=[]
         }
 
         return navPage
