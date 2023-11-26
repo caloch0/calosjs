@@ -34,11 +34,8 @@ function routerExtend(o, routes) {
             page.settings.global = { ...o.settings.global, ...page.settings.global }
 
             navPage = new calo(o.rootel, page.settings)
-            navPage.parent=o
-            o.current=navPage
-            if (window.ajaxExtend) {
-                ajaxExtend(navPage)
-            }
+            navPage.parent = o
+            o.current = navPage
         }
 
         return navPage
