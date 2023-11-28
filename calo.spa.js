@@ -3,6 +3,10 @@ function routerExtend(o, routes) {
     const root = o.rootel.querySelector("[\\@Router]") || o.rootel;
 
     o.navigate = function (route, isHistory) {
+        if (route === "/") {
+            location.href=location.href.split('#')[0]
+            return
+        }
         var navPage
         if (!window.templateLoaded && route !== "/") {
             console.log("only route template is loaded, rquesting others cannot succeed")
@@ -29,10 +33,6 @@ function routerExtend(o, routes) {
         root.appendChild(hm)
         if (script) {
             eval(script)
-            if (route === "/") {
-                location.href=location.href.split('#')[0]
-                return
-            }
             if (!Page) { { console.log('Page should have function Page') }; return; }
             var page = new Page(o.query, o)
             page.settings.global = { ...o.settings.global, ...page.settings.global }
@@ -63,7 +63,6 @@ function routerExtend(o, routes) {
             ...routes
         }
         o.templateStorage = o.templateStorage || {}
-        o.templateStorage["/"] = encodeURIComponent(o.rootel.innerHTML)
         var proms = []
         for (const key in router) {
             if (Object.hasOwnProperty.call(router, key)) {
