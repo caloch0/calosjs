@@ -3,7 +3,7 @@ function routerExtend(o, routes) {
     const root = o.rootel.querySelector("[\\@Router]") || o.rootel;
 
     o.navigate = function (route, isHistory) {
-        if (route === "/") { location.href = href = location.href.split('#')[0]; return; }
+        // if (route === "/") { location.href = href = location.href.split('#')[0]; return; }
         var navPage
         if (!window.templateLoaded && route !== "/") {
             console.log("only route template is loaded, rquesting others cannot succeed")
@@ -35,8 +35,8 @@ function routerExtend(o, routes) {
                 if (!Page) { { console.log('Page should have function Page') }; return; }
                 page = new Page(o.query, o)
             } else {
-                page = new HomePage()
-                page.settings = o.homeSettings
+                o.reload()
+                return
             }
 
             page.settings.global = { ...o.settings.global, ...page.settings.global }

@@ -67,19 +67,25 @@
         })
     }
 
-    var calo = function (el, setting) {
-        this.default = {
+    function init($this,el,setting){
+        $this.default = {
             global: {},
             model: {}
         }
-        this.settings = setting || this.default
-        this.rootel = el
-        this.refs = {}
+        $this.settings = setting || $this.default
+        $this.rootel = el
+        $this.refs = {}
         let refs = el.querySelectorAll('[ref]')
         refs.forEach(r => {
             let refName = r.getAttribute('ref')
-            this.refs[refName] = r
+            $this.refs[refName] = r
         })
+        $this.homeTemplate=encodeURIComponent(el.innerHTML)
+        $this.homeSettings=$this.settings
+
+    }
+    var calo = function (el, setting) {
+        init(this,el,setting)
         calo.run.apply(this)
     }
     calo.prototype = {
@@ -99,6 +105,10 @@
                 args.push(arguments[i])
             }
             functionPlugin.apply(this, args)
+            calo.run.apply(this)
+        },
+        reload:function () {
+            init(this,this.rootel,this.homeSettings)
             calo.run.apply(this)
         }
     }
