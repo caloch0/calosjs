@@ -52,12 +52,12 @@ function routerExtend(o, routes) {
     };
 
     function router(routes) {
-        var router = o.routes || {}
+        var router = o.settings.routes || {}
         router = {
             ...router,
             ...routes
         }
-        const templateStorage = o.templateStorage || {}
+        o.templateStorage = o.templateStorage || {}
         var proms = []
         for (const key in router) {
             if (Object.hasOwnProperty.call(router, key)) {
@@ -65,7 +65,7 @@ function routerExtend(o, routes) {
                 var p = new Promise(resolve => {
                     const htmlName = router[key];
                     getHtmlOrJson(o.spaPath + htmlName + "?_=" + Math.random(), function (text) {
-                        templateStorage[keyLower] = encodeURIComponent(text);
+                        o.templateStorage[keyLower] = encodeURIComponent(text);
                         resolve()
                     })
 
