@@ -31,6 +31,7 @@ function routerExtend(o, routes) {
             eval(script)
             if (route === "/") {
                 location.href=location.href.split('#')[0]
+                return
             }
             if (!Page) { { console.log('Page should have function Page') }; return; }
             var page = new Page(o.query, o)
