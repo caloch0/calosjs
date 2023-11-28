@@ -2,6 +2,7 @@
     Hello world
     <span @field="special"></span>
     <button @click="bc">click</button>
+    <button @click="bd">go to page1</button>
 </div>
 <script>
     function Page(query, app) {
@@ -9,6 +10,9 @@
             model: { special: "pagen" }, global: {},
             bc: function () {
                 this.settings.model.special = "special pagen"
+            },
+            bd:function(){
+                app.navigate("page1")
             }
         }
     }
