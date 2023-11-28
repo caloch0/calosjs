@@ -54,12 +54,12 @@
                     isHappy: true, hobbies: ["selectHobby", "play", "create", "travel"], email: { addr1: "sf@fast.com" }
                 },
                 global: { country: "China" },routes:{
-                    "page1":"page1.html",
-                    "pagen":"pagen.html"
+                    "/page1":"page1.html",
+                    "/pagen":"pagen.html"
                 },
                 ac: function () {
                     this.settings.model.name = "changed calos"
-                    this.navigate("page1")
+                    this.navigate("/page1")
 
                 }
             })
