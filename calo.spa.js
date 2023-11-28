@@ -53,10 +53,6 @@ function routerExtend(o, routes) {
 
     router(routes)
 
-    function HomePage() {
-
-    }
-
 
     function stringToHTML(str) {
         var parser = new DOMParser();
