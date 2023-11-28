@@ -1,7 +1,8 @@
 <div>
     Hello world
     <span @field="special"></span>
-    <button @click="bc">click</button>
+    <button @click="bc">change special field</button>
+    <button @click="bd">go to pagen</button>
 </div>
 <script>
     function Page(query, app) {
@@ -9,6 +10,9 @@
             model: { special: "calos" }, global: {},
             bc: function () {
                 this.settings.model.special = "special calos"
+            },
+            bd:function(){
+                app.navigate("pagen")
             }
         }
     }

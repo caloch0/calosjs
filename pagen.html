@@ -1,0 +1,15 @@
+<div>
+    Hello world
+    <span @field="special"></span>
+    <button @click="bc">click</button>
+</div>
+<script>
+    function Page(query, app) {
+        this.settings = {
+            model: { special: "pagen" }, global: {},
+            bc: function () {
+                this.settings.model.special = "special pagen"
+            }
+        }
+    }
+</script>
