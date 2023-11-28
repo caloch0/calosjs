@@ -3,6 +3,7 @@ function routerExtend(o, routes) {
     const root = o.rootel.querySelector("[\\@Router]") || o.rootel;
 
     o.navigate = function (route, isHistory) {
+        if (route === "/") { location.href = href = location.href.split('#')[0]; return; }
         var navPage
         if (!window.templateLoaded && route !== "/") {
             console.log("only route template is loaded, rquesting others cannot succeed")
@@ -26,7 +27,7 @@ function routerExtend(o, routes) {
         var hm = stringToHTML(decodeURIComponent(o.templateStorage[route.toLowerCase()]))
         var scriptBlock = hm.getElementsByTagName('script')[0]
         var script = scriptBlock ? scriptBlock.text : ''
-        root.appendChild(hm)
+        root.innerHTML = hm.innerHTML
         if (script) {
             var page
             if (route !== "/") {
