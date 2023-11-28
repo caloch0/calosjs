@@ -3,6 +3,8 @@
     <span @field="special"></span>
     <button @click="bc">click</button>
     <button @click="bd">go to page1</button>
+    <button @click="be">go to home</button>
+
 </div>
 <script>
     function Page(query, app) {
@@ -13,6 +15,9 @@
             },
             bd:function(){
                 app.navigate("/page1")
+            },
+            be:function(){
+                app.navigate("/")
             }
         }
     }

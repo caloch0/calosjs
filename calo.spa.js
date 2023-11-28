@@ -29,6 +29,9 @@ function routerExtend(o, routes) {
         root.appendChild(hm)
         if (script) {
             eval(script)
+            if (route === "/") {
+                location.href=location.href.split('#')[0]
+            }
             if (!Page) { { console.log('Page should have function Page') }; return; }
             var page = new Page(o.query, o)
             page.settings.global = { ...o.settings.global, ...page.settings.global }
@@ -36,8 +39,8 @@ function routerExtend(o, routes) {
             navPage = new calo(o.rootel, page.settings)
             navPage.parent = o
             o.current = navPage
-            o.currentReqs=[]
-            o.settings=navPage.settings
+            o.currentReqs = []
+            o.settings = navPage.settings
         }
 
         return navPage
@@ -59,6 +62,7 @@ function routerExtend(o, routes) {
             ...routes
         }
         o.templateStorage = o.templateStorage || {}
+        o.templateStorage["/"] = encodeURIComponent(o.rootel.innerHTML)
         var proms = []
         for (const key in router) {
             if (Object.hasOwnProperty.call(router, key)) {

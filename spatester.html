@@ -9,7 +9,7 @@
     <script src="./calo.js"> </script>
     <script src="./calo.spa.js"> </script>
     <script src="./calo.ajax.js"> </script>
-    
+
 </head>
 
 <body>
@@ -42,30 +42,33 @@
         <div @field="provinces|p">
             <input type="radio" @field="p.checked" name="provinces"><span @field="p.name"></span>
         </div>
+        <script>
 
+            var x = new calo(document.getElementById("app1"),
+                {
+                    model: {
+                        name: "calos", sex: "male", hobby: "play", provinces: [
+                            { name: "洛阳", checked: false }, { name: "上海", checked: true }],
+                        isHappy: true, hobbies: ["selectHobby", "play", "create", "travel"], email: { addr1: "sf@fast.com" }
+                    },
+                    global: { country: "China" }, routes: {
+                        "/page1": "page1.html",
+                        "/pagen": "pagen.html"
+                    },
+                    ac: function () {
+                        this.settings.model.name = "changed calos"
+                        this.navigate("/page1")
+
+                    }
+                })
+            x = routerExtend(x)
+            x = ajaxExtend(x)
+        </script>
     </div>
-    <script>
 
-        var x = new calo(document.getElementById("app1"),
-            {
-                model: {
-                    name: "calos", sex: "male", hobby: "play", provinces: [
-                        { name: "洛阳", checked: false }, { name: "上海", checked: true }],
-                    isHappy: true, hobbies: ["selectHobby", "play", "create", "travel"], email: { addr1: "sf@fast.com" }
-                },
-                global: { country: "China" },routes:{
-                    "/page1":"page1.html",
-                    "/pagen":"pagen.html"
-                },
-                ac: function () {
-                    this.settings.model.name = "changed calos"
-                    this.navigate("/page1")
 
-                }
-            })
-            x=routerExtend(x)
-            x=ajaxExtend(x)
-    </script>
+
+
 </body>
 
 </html>
