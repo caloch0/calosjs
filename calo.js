@@ -7,8 +7,6 @@
                 const fieldValue = data[name];
                 var selector = prefix + name
                 var fullPath = xPath + name
-
-
                 if (isValType(fieldValue)) {
                     const els = getElsByFieldName(scope, selector)
                     els.forEach(el => {
@@ -60,7 +58,7 @@
                         SetValue(el, v)
                     }
                 } catch { }
-            }
+            } 
 
         })
     }
