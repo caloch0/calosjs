@@ -55,8 +55,10 @@
             if (dataPath.indexOf('.') !== -1) {
                 try {
                     var v = eval("data" + "." + dataPath)
-                    if (isValType(v))
+                    if (isValType(v)) {
+                        el.dataset.xpath = dataPath
                         SetValue(el, v)
+                    }
                 } catch { }
             }
 
