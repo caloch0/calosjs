@@ -51,23 +51,19 @@
 
         const els = scope.querySelectorAll("[\\@field]")
         els.forEach(el => {
-            if (el.dataset.xpath && data[el.dataset.xpath] && isValType(data[el.dataset.xpath])) {
-                SetValue(el, data[el.dataset.xpath])
-            } else {
-                const dataPath = el.getAttribute("@field")
-                if (dataPath && !el.dataset.xpath) {
-                    el.dataset.xpath = dataPath
-                    try {
-                        var v = eval("data" + "." + dataPath)
-                        if (isValType(v))
-                            SetValue(el, v)
-                    } catch { }
-                }
+            const dataPath = el.getAttribute("@field")
+            if (dataPath.indexOf('.') !== -1) {
+                try {
+                    var v = eval("data" + "." + dataPath)
+                    if (isValType(v))
+                        SetValue(el, v)
+                } catch { }
             }
+
         })
     }
 
-    function init($this,el,setting){
+    function init($this, el, setting) {
         $this.default = {
             global: {},
             model: {}
@@ -80,12 +76,12 @@
             let refName = r.getAttribute('ref')
             $this.refs[refName] = r
         })
-        $this.homeTemplate=encodeURIComponent(el.innerHTML)
-        $this.homeSettings=$this.settings
+        $this.homeTemplate = encodeURIComponent(el.innerHTML)
+        $this.homeSettings = $this.settings
 
     }
     var calo = function (el, setting) {
-        init(this,el,setting)
+        init(this, el, setting)
         calo.run.apply(this)
     }
     calo.prototype = {
@@ -107,8 +103,8 @@
             functionPlugin.apply(this, args)
             calo.run.apply(this)
         },
-        reload:function () {
-            init(this,this.rootel,this.homeSettings)
+        reload: function () {
+            init(this, this.rootel, this.homeSettings)
             calo.run.apply(this)
         }
     }
@@ -121,7 +117,7 @@
     }
 
     calo.run = function () {
-        this.current=this
+        this.current = this
         var target = this
         var root = target.rootel
         removePoppedbyScope(root)
