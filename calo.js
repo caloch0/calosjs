@@ -58,7 +58,7 @@
                         SetValue(el, v)
                     }
                 } catch { }
-            } 
+            }
 
         })
     }
@@ -104,6 +104,7 @@
             calo.run.apply(this)
         },
         reload: function () {
+            this.rootel.innerHTML = decodeURIComponent(this.homeTemplate)
             init(this, this.rootel, this.homeSettings)
             calo.run.apply(this)
         }
