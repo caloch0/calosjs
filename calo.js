@@ -107,6 +107,9 @@
             this.rootel.innerHTML = decodeURIComponent(this.homeTemplate)
             init(this, this.rootel, this.homeSettings)
             calo.run.apply(this)
+        }, navi(url, app) {
+            this.settings = null
+            app.navigate(url)
         }
     }
 
@@ -118,6 +121,7 @@
     }
 
     calo.run = function () {
+        if (this.settings === null) return
         this.current = this
         var target = this
         var root = target.rootel

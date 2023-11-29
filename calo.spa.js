@@ -23,10 +23,7 @@ function routerExtend(o, routes) {
         } else {
             o.query = {}
         }
-        if (route === "/") {
-            o.reload()
-            return
-        }
+        
         root.innerHTML = ''
         var hm = stringToHTML(decodeURIComponent(o.templateStorage[route.toLowerCase()]))
         var scriptBlock = hm.getElementsByTagName('script')[0]
@@ -40,13 +37,18 @@ function routerExtend(o, routes) {
                 page = new Page(o.query, o)
             }
 
-            page.settings.global = { ...o.settings.global, ...page.settings.global }
+            page.settings.global = { ...o.settings?.global, ...page.settings?.global }
 
             navPage = new calo(o.rootel, page.settings)
             navPage.parent = o
             o.current = navPage
             o.currentReqs = []
             o.settings = navPage.settings
+        }
+
+        if (route === "/") {
+            o.reload()
+            return
         }
 
         return navPage
