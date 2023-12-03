@@ -1,6 +1,7 @@
 function routerExtend(o, routes) {
     o.spaPath = o.spaPath || "./"
-    const root = o.rootel.querySelector("[\\@Router]") || o.rootel;
+    const root = o.rootel;
+    const routerel = o.rootel.querySelector("[\\@Router]")
 
     o.navigate = function (route, isHistory) {
 
@@ -23,12 +24,13 @@ function routerExtend(o, routes) {
         } else {
             o.query = {}
         }
-        
+
         root.innerHTML = ''
         var hm = stringToHTML(decodeURIComponent(o.templateStorage[route.toLowerCase()]))
         var scriptBlock = hm.getElementsByTagName('script')[0]
         var script = scriptBlock ? scriptBlock.text : ''
-        root.innerHTML = hm.innerHTML
+        if (!routerel) root.innerHTML = hm.innerHTML
+        else routerel.innerHTML = hm.innerHTML
         if (script) {
             var page
             if (route !== "/") {
