@@ -1,0 +1,24 @@
+<div>
+    Hello world pagex
+    <span @field="special"></span>
+    <button @click="bc">click</button>
+    <button @click="bd">go to pagen</button>
+    <button @click="be">go to home</button>
+
+</div>
+<script>
+    function Page(query, app) {
+        this.settings = {
+            model: { special: "pagex" }, global: {},
+            bc: function () {
+                this.settings.model.special = "special pagex"
+            },
+            bd: function () {
+                this.navi("/pagen", app)
+            },
+            be: function () {
+                this.navi("/", app)
+            }
+        }
+    }
+</script>
