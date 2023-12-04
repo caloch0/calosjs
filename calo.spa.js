@@ -1,11 +1,11 @@
 function routerExtend(o, routes) {
     o.spaPath = o.spaPath || "./"
+    o.templateStorage = o.templateStorage || {}
     const root = o.rootel;
     const routerel = o.rootel.querySelector("[\\@Router]")
 
     o.navigate = function (route, isHistory) {
 
-        var navPage
         if (!window.templateLoaded && route !== "/") {
             console.log("only route template is loaded, rquesting others cannot succeed")
             return
@@ -25,6 +25,22 @@ function routerExtend(o, routes) {
             o.query = {}
         }
 
+        if (!o.templateStorage[route.toLowerCase()] && route !== '/') {
+            var pagePath = o.spaPath + route.substr(1) + ".html"
+            getHtmlOrJson(pagePath + "?_=" + Math.random(), function (text) {
+                o.templateStorage[route.toLowerCase()] = encodeURIComponent(text);
+                makePage(route, o)
+            })
+        }
+        else
+            return makePage(route, o)
+    }
+
+    router(routes)
+
+
+    function makePage(route, o) {
+        var navPage
         root.innerHTML = ''
         var hm = stringToHTML(decodeURIComponent(o.templateStorage[route.toLowerCase()]))
         var scriptBlock = hm.getElementsByTagName('script')[0]
@@ -55,10 +71,6 @@ function routerExtend(o, routes) {
 
         return navPage
     }
-
-    router(routes)
-
-
     function stringToHTML(str) {
         var parser = new DOMParser();
         var doc = parser.parseFromString(str, 'text/html');
@@ -72,7 +84,6 @@ function routerExtend(o, routes) {
             ...router,
             ...routes
         }
-        o.templateStorage = o.templateStorage || {}
         var proms = []
         for (const key in router) {
             if (Object.hasOwnProperty.call(router, key)) {
