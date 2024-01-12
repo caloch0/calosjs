@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doc CalochJs</title>
+    <script src="https://caloch.gitee.io/calochjs/calo.utils.js"></script>
+    <script src="https://caloch.gitee.io/calochjs/calo.js"></script>
+    <script src="https://caloch.gitee.io/calochjs/calo.spa.js"></script>
+    <script src="https://caloch.gitee.io/calochjs/calo.ajax.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        list-style-type: none;
+      }
+      .header {
+        width: 100%;
+        height: 150px;
+        text-align: center;
+        background-color: black;
+      }
+      .header .menu {
+        display: inline-block;
+        margin: 80px 0 0 0;
+        color: white;
+        width: 100%;
+      }
+      .header .menu li {
+        float: left;
+        display: block;
+        margin: 0 5px;
+      }
+      .header .menu li:hover {
+        background-color: white;
+        color: black;
+        border-radius: 2px;
+        padding: 0px 3px;
+      }
+      .clear {
+        clear: both;
+      }
+      .main {
+        width: 100%;
+        min-height: 300px;
+      }
+      .main > div {
+        float: left;
+      }
+      .main .left {
+        display: block;
+        width: 200px;
+        text-align: left;
+        border-right: 1px solid black;
+        margin: 15px auto;
+      }
+      .main .content {
+        display: block;
+        width: calc(100% - 220px);
+        padding: 15px 0 0 15px;
+      }
+      .footer {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background-color: black;
+        min-height: 50px;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app1">
+      <div class="header clear">
+        <ul class="menu">
+          <li @field="lv1Menus|" @click="nav">lv1Menus</li>
+        </ul>
+      </div>
+      <div class="main clear">
+        <div class="left">
+          <ul class="submenu">
+            <li>Theory</li>
+            <li>Binding</li>
+            <li>Templating</li>
+            <li>
+              events
+              <ul>
+                <li>Value Controls</li>
+                <li>Dataset controls</li>
+              </ul>
+            </li>
+            <li>
+              Spa
+              <ul>
+                <li>Page</li>
+                <li>Routes</li>
+              </ul>
+            </li>
+            <li>Ajax task and queuing</li>
+            <li>Refs</li>
+            <li>Dom By Xpath</li>
+          </ul>
+        </div>
+        <div class="content" @Router>illustration</div>
+      </div>
+      <div class="footer clear">CopyRight2024@Caloch</div>
+
+      <script>
+        var app1 = ajaxExtend(
+          routerExtend(
+            new calo(document.getElementById("app1"), {
+              model: {
+                lv1Menus: ["CoreConcepts", "HandsOn", "CDN", "Contact"],
+              },
+              global: { country: "China" },
+              routes: {},
+              nav: function (el) {
+                alert(el.dataset.xpath);
+                // this.navigate("/page1");
+              },
+            })
+          )
+        );
+      </script>
+    </div>
+  </body>
+</html>
