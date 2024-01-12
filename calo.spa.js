@@ -41,7 +41,6 @@ function routerExtend(o, routes) {
 
     function makePage(route, o) {
         var navPage
-        root.innerHTML = ''
         var hm = stringToHTML(decodeURIComponent(o.templateStorage[route.toLowerCase()]))
         var scriptBlock = hm.getElementsByTagName('script')[0]
         var script = scriptBlock ? scriptBlock.text : ''
