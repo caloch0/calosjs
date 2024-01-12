@@ -2,7 +2,6 @@ function routerExtend(o, routes) {
     o.spaPath = o.spaPath || "./"
     o.templateStorage = o.templateStorage || {}
     const root = o.rootel;
-    const routerel = o.rootel.querySelector("[\\@Router]")
 
     o.navigate = function (route, isHistory) {
 
@@ -41,6 +40,7 @@ function routerExtend(o, routes) {
 
     function makePage(route, o) {
         var navPage
+        var routerel = o.rootel.querySelector("[\\@Router]")
         var hm = stringToHTML(decodeURIComponent(o.templateStorage[route.toLowerCase()]))
         var scriptBlock = hm.getElementsByTagName('script')[0]
         var script = scriptBlock ? scriptBlock.text : ''
