@@ -98,7 +98,7 @@
                     for (let i = 0; i < atns.length; i++) {
                         props[atns[i]] = el.getAttribute(atns[i])
                     }
-                    let ret = functionPlugin.call(this.settings, props)
+                    let ret = functionPlugin.call(this, props)
                     el.outerHTML = ret
                 }
             }
