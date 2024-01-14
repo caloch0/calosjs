@@ -93,8 +93,13 @@
                 var tg = functionPlugin.name
                 var els = this.rootel.getElementsByTagName(tg)
                 for (let el of els) {
-                    let ret = functionPlugin.call(this.settings)
-                    els[el].outerHTML = ret
+                    var props = {}
+                    let atns = el.getAttributeNames()
+                    for (let i = 0; i < atns.length; i++) {
+                        props[atns[i]] = el.getAttribute(atns[i])
+                    }
+                    let ret = functionPlugin.call(this.settings, props)
+                    el.outerHTML = ret
                 }
             }
             calo.run.apply(this)
