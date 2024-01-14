@@ -57,7 +57,7 @@
                         el.dataset.xpath = dataPath
                         SetValue(el, v)
                     }
-                } catch { }
+                } catch {}
             }
 
         })
@@ -87,15 +87,19 @@
     calo.prototype = {
         getElsByxpath: function (xpath) {
             return this.rootel.querySelectorAll(`[data-xpath= '${xpath}']`)
-        }
-        , makePlugin: function (idOrEl, functionPlugin) {
-            if (idOrEl instanceof HTMLElement)
-                functionPlugin.call(this, idOrEl)
-            else
-                functionPlugin.call(this.settings, document.getElementById(idOrEl))
+        },
+        makePlugin: function (functionPlugin) {
+            if (typeof functionPlugin === "function") {
+                var tg = functionPlugin.name
+                var els = this.rootel.getElementsByTagName(tg)
+                for (let el of els) {
+                    let ret = functionPlugin.call(this.settings)
+                    els[el].outerHTML = ret
+                }
+            }
             calo.run.apply(this)
-        }
-        , callPlugin: function (el, functionPlugin) {
+        },
+        callPlugin: function (el, functionPlugin) {
             let args = [el]
             for (let i = 2; i < arguments.length; i++) {
                 args.push(arguments[i])
@@ -107,7 +111,8 @@
             this.rootel.innerHTML = decodeURIComponent(this.homeTemplate)
             init(this, this.rootel, this.homeSettings)
             calo.run.apply(this)
-        }, navi(url, app) {
+        },
+        navi(url, app) {
             this.settings = null
             app.navigate(url)
         }
@@ -247,6 +252,7 @@
         else if (el.tagName === "INPUT" && el.type === "number") el.value = val
         else if (el.tagName === "TEXTAREA") el.value = val
         else if (el.tagName === "A") el.href = val
+        else if (el.tagName === "IMG") el.src = val
         else if (el.tagName === "INPUT" && el.type === "checkbox")
             el.checked = val
         else if (el.tagName === "INPUT" && el.type === "radio") el.checked = val
@@ -288,4 +294,3 @@
 
     w.calo = calo
 })(window);
-
