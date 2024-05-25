@@ -42,7 +42,7 @@ function pluginTree(container) {
             return n.pid == node.id
         }).forEach(
             c => {
-                csh += `<li data-url=${c.url}>${c.name}${renderObject(c, nodes)}</li>`
+                csh += `<li  data-url=${c.url}><input type="checkbox" @Change="n2" /><span @click="n1">${c.name}</span><select @change="n3"><option>1</option><option>2</option></select>${renderObject(c, nodes)}</li>`
             }
         )
         return csh == '' ? '' : `<ul>${csh}</ul>`
@@ -51,18 +51,22 @@ function pluginTree(container) {
         id: null
     }, nodes)
     container.innerHTML = obj
+    
 
     let els = container.getElementsByTagName('li');
     for (const el in els) {
-        els[el].onclick = function (e) {
+        if(!els[el].children)return
+        let ckb=els[el]?.children[0]
+        console.log(ckb)
+        ckb.onclick = function (e) {
             e.preventDefault()
             e.stopPropagation()
             if (e.target.dataset.url !== 'undefined')
-                calo.navigate(e.target.dataset.url)
-            if (this.children[0])
-                this.children[0].style.display = this.children[0].style.display == 'none' ? '' : 'none';
+                // calo.navigate(e.target.dataset.url)
+            if (els[el].children[2])
+            els[el].children[2].style.display = els[el].children[2].style.display == 'none' ? '' : 'none';
             calo.callPlugin(el, function () {
-                this.model.user = 22
+                // this.model.user = 22
             })
         }
     }
