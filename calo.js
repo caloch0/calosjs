@@ -57,7 +57,7 @@
                         el.dataset.xpath = dataPath
                         SetValue(el, v)
                     }
-                } catch {}
+                } catch { }
             }
 
         })
@@ -153,6 +153,23 @@
                 target.settings[c.getAttribute("@Change")].call(target, c, c.value)
                 calo.run.apply(target)
             }
+
+            // const parent = c.parentNode;
+            // const newElement = c.cloneNode(true); 
+            // parent.replaceChild(newElement, c);
+            // if (c.tagName === 'SELECT') {
+            //     newElement.value = c.value
+            // }
+
+            // var handler = function (e) {
+            //     e.preventDefault()
+            //     e.stopPropagation()
+            //     target.settings[c.getAttribute("@Change")].call(target, newElement, newElement.value)
+            //     calo.run.apply(target)
+            // }
+            // newElement.addEventListener('change', handler)
+
+
         })
 
         root.querySelectorAll("[\\@Show]").forEach(el => {
@@ -235,7 +252,9 @@
 
         function applySameFieldSelectChange() {
             root.querySelectorAll("Select").forEach(ipc => {
-                ipc.onchange = function () {
+                ipc.addEventListener('change',function(e){
+                    e.preventDefault()
+                    e.stopPropagation()
                     const selected = this.value
                     var xpath = ipc.dataset.xpath
                     eval("target.settings.model." + xpath + "='" + selected + "'")
@@ -243,8 +262,8 @@
                     nodes.forEach(el => {
                         SetValue(el, selected)
                     })
-
-                }
+                })
+                
             })
         }
 
