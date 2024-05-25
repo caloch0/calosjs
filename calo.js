@@ -221,6 +221,9 @@
                         e.preventDefault()
                         e.stopPropagation()
                         eval("target.settings.model." + ip.dataset.xpath + "='" + ip.value + "'")
+                        if (target.settings.global.hasOwnProperty(ip.dataset.xpath)) {
+                            eval("target.settings.global." + ip.dataset.xpath + "='" + ip.value + "'")
+                        }
                         root.querySelectorAll(`[data-xpath= '${ip.dataset.xpath}']`).forEach(el => {
                             SetValue(el, ip.value)
                         })
@@ -252,7 +255,7 @@
 
         function applySameFieldSelectChange() {
             root.querySelectorAll("Select").forEach(ipc => {
-                ipc.addEventListener('change',function(e){
+                ipc.addEventListener('change', function (e) {
                     e.preventDefault()
                     e.stopPropagation()
                     const selected = this.value
@@ -263,7 +266,7 @@
                         SetValue(el, selected)
                     })
                 })
-                
+
             })
         }
 
