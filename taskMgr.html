@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./calo.utils.js"> </script>
+    <script src="./calo.js"> </script>
+    <script src="./pluginTree.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.6.0.min.js"></script>
+    <style>
+        li {
+            list-style-type: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app1">
+        <span @click="n2">test</span>
+        <input type="checkbox" @Change="n2" />
+        <input type="text" @field="cur" />
+        <select @Change="n3">
+            <option>1</option>
+            <option>2</option>
+        </select>
+
+        <ul>
+            <li @field="projects|"></li>
+        </ul>
+
+        <div ref="taskTree">
+        </div>
+    </div>
+    <script>
+
+        var x = new calo(document.getElementById("app1"),
+            {
+                model: {
+                    currentTaskId: 0,
+                    projects: ["a", "b", "c", "d"]
+                },
+                global: { cur: 0 },
+                n1: function (a) {
+                    console.log(a)
+                    if (a.dataset.url === undefined) {
+                        console.log(a.parent)
+                        a.parentNode.children[2].style.display = a.parentNode.children[2].style.display === 'none' ? '' : 'none'
+                    }
+                },
+                n2: function (a) {
+                    alert(a.checked)
+                    this.settings.global.currentTaskId = 99
+                },
+                n3: function (a) {
+                    alert(a.value)
+                    this.settings.global.currentTaskId = 0
+                }
+            })
+        x.callPlugin(x.refs.taskTree, pluginTree)
+
+
+    </script>
+</body>
+
+</html>
