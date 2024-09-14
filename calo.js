@@ -112,9 +112,12 @@
             functionPlugin.apply(this, args)
             calo.run.apply(this)
         },
-        reload: function () {
+        reload: function (query,app) {
             this.rootel.innerHTML = decodeURIComponent(this.homeTemplate)
             init(this, this.rootel, this.homeSettings)
+            if(this.settings.onload){
+                this.settings.onload(query,app)
+            }
             calo.run.apply(this)
         },
         navi(url, app) {
