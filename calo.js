@@ -118,7 +118,7 @@
             calo.run.apply(this)
         },
         navi(url, app) {
-            this.settings = null
+            this.settings.model = null
             app.navigate(url)
         }
     }
@@ -131,7 +131,7 @@
     }
 
     calo.run = function () {
-        if (this.settings === null) return
+        if (this.settings.model === null) return
         this.current = this
         var target = this
         var root = target.rootel
