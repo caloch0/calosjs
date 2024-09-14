@@ -69,8 +69,11 @@ function routerExtend(o, routes) {
         }
 
         if (route === "/") {
-            o.reload()
+            o.reload(o.query,o)
             return
+        }
+        if(page.onload){
+            page.onload(o.query,o)
         }
 
         return navPage
