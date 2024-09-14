@@ -46,7 +46,7 @@ function routerExtend(o, routes) {
         var script = scriptBlock ? scriptBlock.text : ''
         if(!scriptBlock){
             console.log('404 not found,back to home',route)
-            o.reload()
+            o.reload(o.query,o)
             return
         }
         if (!routerel) root.innerHTML = hm.innerHTML
