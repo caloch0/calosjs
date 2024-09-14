@@ -44,6 +44,10 @@ function routerExtend(o, routes) {
         var hm = stringToHTML(decodeURIComponent(o.templateStorage[route.toLowerCase()]))
         var scriptBlock = hm.getElementsByTagName('script')[0]
         var script = scriptBlock ? scriptBlock.text : ''
+        if(!scriptBlock){
+            console.log('404 not found',route)
+            return
+        }
         if (!routerel) root.innerHTML = hm.innerHTML
         else routerel.innerHTML = hm.innerHTML
         if (script) {
