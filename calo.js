@@ -272,6 +272,9 @@
 
             })
         }
+        if(this.settings.onload){
+            this.settings.onload({},this)
+        }
 
     }
 
