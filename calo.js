@@ -138,6 +138,9 @@
         this.current = this
         var target = this
         var root = target.rootel
+        if(this.settings.onload){
+            this.settings.onload(this)
+        }
         removePoppedbyScope(root)
         renderScope({
             ...target.settings.global,
@@ -271,9 +274,6 @@
                 })
 
             })
-        }
-        if(this.settings.onload){
-            this.settings.onload(this.query||{},this)
         }
 
     }
