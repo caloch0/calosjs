@@ -273,7 +273,7 @@
             })
         }
         if(this.settings.onload){
-            this.settings.onload({},this)
+            this.settings.onload(this.query||{},this)
         }
 
     }
