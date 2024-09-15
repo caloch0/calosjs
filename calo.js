@@ -83,6 +83,9 @@
     var calo = function (el, setting) {
         init(this, el, setting)
         calo.run.apply(this)
+        if(this.settings.onload){
+            this.settings.onload(this)
+        }
     }
     calo.prototype = {
         getElsByxpath: function (xpath) {
@@ -112,11 +115,11 @@
             functionPlugin.apply(this, args)
             calo.run.apply(this)
         },
-        reload: function (query,app) {
+        reload: function (query, app) {
             this.rootel.innerHTML = decodeURIComponent(this.homeTemplate)
             init(this, this.rootel, this.homeSettings)
-            if(this.settings.onload){
-                this.settings.onload(query,app)
+            if (this.settings.onload) {
+                this.settings.onload(query, app)
             }
             calo.run.apply(this)
         },
@@ -138,9 +141,6 @@
         this.current = this
         var target = this
         var root = target.rootel
-        if(this.settings.onload){
-            this.settings.onload(this)
-        }
         removePoppedbyScope(root)
         renderScope({
             ...target.settings.global,
