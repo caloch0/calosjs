@@ -196,14 +196,14 @@
             }
         })
 
-        applySameFieldKeyupChange("input[type=text]")
-        applySameFieldKeyupChange("textarea")
-        applySameFieldKeyupChange("input[type=date]")
-        applySameFieldKeyupChange("input[type=password]")
-        applySameFieldKeyupChange("input[type=number]")
+        applyKeyupChange("input[type=text]")
+        applyKeyupChange("textarea")
+        applyKeyupChange("input[type=date]")
+        applyKeyupChange("input[type=password]")
+        applyKeyupChange("input[type=number]")
 
-        applySameFieldClickChange("input[type=checkbox]")
-        applySameFieldClickChange("input[type=radio]", function (el) {
+        applyClickChange("input[type=checkbox]")
+        applyClickChange("input[type=radio]", function (el) {
             if (el.name) {
                 const groupname = el.name
                 const group = root.querySelectorAll(`input[type=radio][name=${groupname}]`)
@@ -218,9 +218,9 @@
             }
 
         })
-        applySameFieldSelectChange()
+        applySelectChange()
 
-        function applySameFieldKeyupChange(tag) {
+        function applyKeyupChange(tag) {
             root.querySelectorAll(tag).forEach(ip => {
                 if (window.addEventListener) {
                     ip.addEventListener('keyup', function (e) {
@@ -243,7 +243,7 @@
             })
         }
 
-        function applySameFieldClickChange(tag, pre) {
+        function applyClickChange(tag, pre) {
             root.querySelectorAll(tag).forEach(ipc => {
                 ipc.onclick = function () {
                     if (pre) pre(this)
@@ -259,7 +259,7 @@
             })
         }
 
-        function applySameFieldSelectChange() {
+        function applySelectChange() {
             root.querySelectorAll("Select").forEach(ipc => {
                 ipc.addEventListener('change', function (e) {
                     e.preventDefault()
